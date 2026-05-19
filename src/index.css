@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+/* Ito ang sikreto sa v4 para sa manual toggle */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Opsyonal: Dito mo ilalagay ang custom colors mo kung gusto mo */
+  --color-off-white: #faf9f6;
+  --color-gold-custom: #8b6d31;
+}
+
+/* Tinitiyak na ang html at body ay sasunod sa kulay */
+@layer base {
+  html.dark {
+    background-color: #09090b; /* zinc-950 */
+    color: #f4f4f5; /* zinc-100 */
+  }
+  
+  /* Smooth transition para hindi masakit sa mata ang paglipat */
+  * {
+    @apply transition-colors duration-200;
+  }
+}
