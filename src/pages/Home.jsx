@@ -4,7 +4,8 @@ import { useSearch } from "../hooks/useSearch";
 import ResultLink from "./ResultLinks";
 
 export default function Home() {
-  const { isLoading, showResults, performSearch } = useSearch();
+  // FIXED: Kinuha natin si resetSearch mula sa hook mo
+  const { isLoading, showResults, performSearch, resetSearch } = useSearch();
 
   return (
     <section className="flex flex-col items-center justify-center px-4 py-20 text-center bg-[#faf9f6] dark:bg-zinc-900 transition-colors duration-300 min-h-screen">
@@ -66,11 +67,13 @@ export default function Home() {
 
       {/* 3. RESULTS STATE */}
       {showResults && !isLoading && (
-        <div className="w-full max-w-5xl animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="w-full max-w-5xl animate-in fade-in slide-in-from-bottom-4 duration-700 flex flex-col items-center">
           <ResultLink/>
+          
+          {/* FIXED: Pinalitan ang window.location.reload() ng resetSearch at nilagyan ng relative z-10 para siguradong mapindot */}
           <button 
-            onClick={() => window.location.reload()} 
-            className="mt-12 text-xs font-bold tracking-widest text-gray-400 hover:text-amber-700 uppercase transition-colors"
+            onClick={resetSearch} 
+            className="relative z-10 mt-12 text-xs font-bold tracking-widest text-gray-400 hover:text-amber-700 uppercase transition-colors cursor-pointer"
           >
             Search Another Verse
           </button>
