@@ -27,7 +27,16 @@ const Navbar = () => {
       
       <ul className="absolute left-1/2 flex -translate-x-1/2 items-center gap-8 font-medium text-gray-600 dark:text-gray-300">
         <li>
-          <a href="#" className="pb-1 text-sm border-b-2 border-[#8b6d31] dark:border-[#a68b55] transition-colors">
+          <a 
+            href="#" 
+            onClick={() => {
+              // 1. Babaguhin natin ng bahagya ang URL para mapilitan ang React na mag-update
+              window.location.hash = "home"; 
+              // 2. Puwersahan nating ire-refresh ang page nang mabilis
+              window.location.reload();
+            }} 
+            className="pb-1 text-sm border-b-2 border-[#8b6d31] dark:border-[#a68b55] transition-colors"
+          >
             Home
           </a>
         </li>
