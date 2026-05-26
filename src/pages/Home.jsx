@@ -8,7 +8,7 @@ export default function Home() {
   const { isLoading, showResults, performSearch, resetSearch } = useSearch();
 
   return (
-    <section className="flex flex-col items-center justify-center px-4 py-20 text-center bg-[#faf9f6] dark:bg-zinc-900 transition-colors duration-300 min-h-screen">
+    <section className="flex flex-col items-center justify-center px-4 py-20 text-center bg-[#faf9f6] dark:bg-zinc-900 transition-colors duration-300 animate-fade-in min-h-screen">
       
       {/* 1. DEFAULT STATE (Header & Search Bar) */}
       {!isLoading && !showResults && (

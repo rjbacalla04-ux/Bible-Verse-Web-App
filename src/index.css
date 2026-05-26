@@ -7,6 +7,20 @@
   /* Opsyonal: Dito mo ilalagay ang custom colors mo kung gusto mo */
   --color-off-white: #faf9f6;
   --color-gold-custom: #8b6d31;
+
+  /* 🔥 v4 ANIMATION DEFINITION: Idinagdag natin ito sa loob ng @theme */
+  --animate-fade-in: fade-in 3.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px); /* Magsisimula ng bahagyang nakababa */
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);    /* Babalik sa tamang pwesto */
+    }
+  }
 }
 
 /* Tinitiyak na ang html at body ay sasunod sa kulay */
