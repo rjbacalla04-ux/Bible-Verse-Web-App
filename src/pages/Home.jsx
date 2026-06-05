@@ -2,10 +2,21 @@ import SearchBar from "../components/SearchBar";
 import LoadingView from "./LoadingView";
 import { useSearch } from "../hooks/useSearch";
 import ResultLink from "./ResultLinks";
+import { useState, useEffect } from 'react';
 
-export default function Home() {
-  // FIXED: Kinuha natin si resetSearch mula sa hook mo
-  const { isLoading, showResults, performSearch, resetSearch } = useSearch();
+export default function Home({ onSelectVerse }) {
+
+  const [sampleVerses, setSampleVerses] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/verses')
+      .then((res) => res.json())
+      .then((data) => setSampleVerses(data))
+      .catch((err) => console.error("Hindi makakonekta sa backend:", err));
+  }, []);
+
+  // 🔥 UPDATED: Kinuha na rin natin si searchResult mula sa useSearch hook mo
+  const { isLoading, showResults, query, searchResult, performSearch, resetSearch } = useSearch();
 
   return (
     <section className="flex flex-col items-center justify-center px-4 py-20 text-center bg-[#faf9f6] dark:bg-zinc-900 transition-colors duration-300 animate-fade-in min-h-screen">
@@ -25,13 +36,13 @@ export default function Home() {
           {/* Quick Search Suggestions */}
           <div className="mt-8">
             <div className="flex flex-wrap justify-center gap-3">
-              {["Psalm 23", "Romans 8:28", "Philippians 4:13"].map((verse) => (
+              {sampleVerses.map((item) => (
                 <button
-                  key={verse}
-                  onClick={() => performSearch(verse)}
-                  className="px-5 py-2 text-sm text-gray-600 dark:text-gray-300 bg-[#f1f0ee] dark:bg-zinc-800 rounded-full hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors"
+                  key={item.id}
+                  onClick={() => performSearch(item.verse)}
+                  className="px-5 py-2 text-sm text-gray-600 dark:text-gray-300 bg-[#f1f0ee] dark:bg-zinc-800 rounded-full hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
                 >
-                  {verse}
+                  {item.verse}
                 </button>
               ))}
             </div>
@@ -68,9 +79,9 @@ export default function Home() {
       {/* 3. RESULTS STATE */}
       {showResults && !isLoading && (
         <div className="w-full max-w-5xl animate-in fade-in slide-in-from-bottom-4 duration-700 flex flex-col items-center">
-          <ResultLink/>
+          {/* 🔥 FIXED: Ipinasa natin ang searchResult data dito sa ResultLink */}
+          <ResultLink result={searchResult} />
           
-          {/* FIXED: Pinalitan ang window.location.reload() ng resetSearch at nilagyan ng relative z-10 para siguradong mapindot */}
           <button 
             onClick={resetSearch} 
             className="relative z-10 mt-12 text-xs font-bold tracking-widest text-gray-400 hover:text-amber-700 uppercase transition-colors cursor-pointer"
